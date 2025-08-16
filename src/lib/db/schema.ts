@@ -28,7 +28,7 @@ export const habits = pgTable(
   (table) => [index("idx_habits_user_id").on(table.userId)]
 );
 
-export const habitCompletions = pgTable(
+export const habitsCompletion = pgTable(
   "habits_completion",
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
