@@ -1,6 +1,15 @@
-export interface UserDailyHabit {
+export type Habit = {
+  id: number;
+  userId: number;
+  title: string;
+  description: string;
+  updated_at: Date | null;
+  created_at: Date;
+  deleted_at: Date | null;
+};
+
+export type UserDailyHabit = {
   id: number;
   title: string;
-  description: string | null;
   completed_at?: Date | null;
-}
+};

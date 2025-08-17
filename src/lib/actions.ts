@@ -3,8 +3,16 @@
 import { and, eq, sql } from "drizzle-orm";
 import { db } from "./db";
 import { habitsCompletion, habits } from "./db/schema";
-import { UserDailyHabit } from "@/types";
+import { Habit, UserDailyHabit } from "@/types";
 import { revalidatePath } from "next/cache";
+
+export async function getUserHabits(userId: number) {
+  const result = await db
+    .select()
+    .from(habits)
+    .where(eq(habits.userId, userId));
+  return result as Habit[];
+}
 
 export async function getTodayHabits(
   userId: number
@@ -27,14 +35,14 @@ export async function getTodayHabits(
     .where(eq(habits.userId, userId));
 }
 
-export async function markCompleted(habitId: number): Promise<void> {
+export async function markCompleted(habitId: number) {
   await db.insert(habitsCompletion).values({
     habitId,
   });
   revalidatePath("/habits");
 }
 
-export async function markUncompleted(habitId: number): Promise<void> {
+export async function markUncompleted(habitId: number) {
   await db
     .delete(habitsCompletion)
     .where(
@@ -46,7 +54,7 @@ export async function markUncompleted(habitId: number): Promise<void> {
   revalidatePath("/habits");
 }
 
-export async function markAllCompleted(userId: number): Promise<void> {
+export async function markAllCompleted(userId: number) {
   // Doesn't work as expected (#3608 drizzle bug)
   // await db
   //   .insert(habitCompletions)
@@ -65,4 +73,8 @@ export async function markAllCompleted(userId: number): Promise<void> {
   );
 
   revalidatePath("/habits");
+}
+
+export async function deleteHabit(id: number) {
+  await db.delete(habits).where(eq(habits.id, id));
 }
