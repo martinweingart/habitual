@@ -73,26 +73,30 @@ export function HabitCheckForm(props: HabitCheckFormProps) {
   };
 
   return (
-    <div className="flex flex-col gap-5">
-      {optimisticHabits.map((habit: UserDailyHabit) => (
-        <div key={habit.id} className="flex items-start gap-3">
-          <Checkbox
-            id={`toggle-${habit.id}`}
-            checked={!!habit.completed_at}
-            onCheckedChange={(checked) => onToggle(habit.id, Boolean(checked))}
-          />
-          <Label
-            htmlFor={`toggle-${habit.id}`}
-            className={cn({
-              "line-through": !!habit.completed_at,
-            })}
-          >
-            {habit.title}
-          </Label>
-        </div>
-      ))}
+    <div className="flex flex-col gap-10">
+      <div className="lg:columns-2 xl:columns-3 space-y-4">
+        {optimisticHabits.map((habit: UserDailyHabit) => (
+          <div key={habit.id} className="flex items-start gap-3">
+            <Checkbox
+              id={`toggle-${habit.id}`}
+              checked={!!habit.completed_at}
+              onCheckedChange={(checked) =>
+                onToggle(habit.id, Boolean(checked))
+              }
+            />
+            <Label
+              htmlFor={`toggle-${habit.id}`}
+              className={cn({
+                "line-through": !!habit.completed_at,
+              })}
+            >
+              {habit.title}
+            </Label>
+          </div>
+        ))}
+      </div>
 
-      <Button color="primary" onClick={onMarkAll}>
+      <Button className="self-start" variant="primary" onClick={onMarkAll}>
         Mark All as Done
       </Button>
     </div>

@@ -3,9 +3,9 @@ import { UserAvatar } from "./UserAvatar";
 
 function NavBar() {
   return (
-    <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f2f5] px-10 py-3">
-      <div className="flex items-center gap-4 text-[#111418]">
-        <div className="size-4">
+    <header className="flex items-center justify-between border-b border-solid px-2 md:px-10 py-3">
+      <div className="flex items-center gap-4">
+        <div className="size-6">
           <Logo />
         </div>
         <h2 className="text-lg font-bold">Habitual</h2>

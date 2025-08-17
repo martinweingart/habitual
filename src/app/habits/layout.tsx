@@ -6,12 +6,10 @@ export default function HabitsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section>
-      <div className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
-        <div className="layout-container flex h-full grow flex-col">
-          <NavBar />
-          <div className="px-40 py-5 flex flex-1">{children}</div>
-        </div>
+    <section className="h-full grid grid-rows-[auto_minmax(0,1fr)] bg-white">
+      <NavBar />
+      <div className="h-full px-2 md:px-30 lg:px-40 xl:px-60 py-5 box-border">
+        {children}
       </div>
     </section>
   );
