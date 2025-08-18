@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { Logo } from "./Logo";
 import { UserAvatar } from "./UserAvatar";
+import { USER } from "@/session";
 
 function NavBar() {
   return (
@@ -11,10 +13,21 @@ function NavBar() {
         <h2 className="text-lg font-bold">Habitual</h2>
       </div>
 
-      <UserAvatar
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeATwaEbJD5kTARX7JAg1CpWvtwllzKKdFmUkEcp7vao3JAUh7O9jIE25gFPBTF8QocVX46efvq3l5l3kiWNc62E2v-CPnaOZuicMYuMSEenk-1uJ2-fvW6_WkLJgSgPwP99eIbTniipo6iGDkvtgEfODFwsBaGYxnUf5mnSLlQyt1YtDACzvYBNXBFPBiVQgY9mHcGJ46oTGC8CqavVRP4XiclHxMwgIMKwHl24UPY5jn0T55OjoVt1Xonx-IK5-CUiFlHfJTXo"
-        name="Juana La Loca"
-      />
+      <div className="flex items-center gap-9">
+        <div className="flex items-center gap-4">
+          <Link className="text-sm font-medium" href="/habits">
+            Today
+          </Link>
+          <Link className="text-sm font-medium" href="/habits/manage">
+            Manage
+          </Link>
+          <Link className="text-sm font-medium" href="/habits/dashboard">
+            Dashboard
+          </Link>
+        </div>
+
+        <UserAvatar src={USER.avatar_url} name={USER.name} />
+      </div>
     </header>
   );
 }

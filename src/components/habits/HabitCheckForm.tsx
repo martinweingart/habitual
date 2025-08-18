@@ -12,7 +12,7 @@ import {
   markUncompleted,
 } from "@/lib/actions";
 import { Button } from "../ui/button";
-import { USER_ID } from "@/session";
+import { USER } from "@/session";
 
 type OptimisticActionAll = {
   type: "all";
@@ -69,7 +69,7 @@ export function HabitCheckForm(props: HabitCheckFormProps) {
       setOptimisticHabits({ type: "all" });
     });
 
-    await markAllCompleted(USER_ID);
+    await markAllCompleted(USER.id);
   };
 
   return (

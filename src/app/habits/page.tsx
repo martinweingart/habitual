@@ -2,10 +2,10 @@ import { HabitCheckForm } from "@/components/habits/HabitCheckForm";
 import { PageTitle } from "@/components/PageTitle";
 import { PageDescription } from "@/components/PageDescription";
 import { getTodayHabits } from "@/lib/actions";
-import { USER_ID } from "@/session";
+import { USER } from "@/session";
 
 export default async function Habits() {
-  const todayHabits = await getTodayHabits(USER_ID);
+  const todayHabits = await getTodayHabits(USER.id);
 
   return (
     <div className="flex flex-col gap-8">
