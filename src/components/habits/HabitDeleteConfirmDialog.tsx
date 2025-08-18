@@ -8,10 +8,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { AlertDialogProps } from "@radix-ui/react-alert-dialog";
 
-type HabitDeleteConfirmDialogProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+type HabitDeleteConfirmDialogProps = Pick<
+  AlertDialogProps,
+  "open" | "onOpenChange"
+> & {
   onConfirm: () => void;
 };
 
