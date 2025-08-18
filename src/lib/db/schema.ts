@@ -20,7 +20,9 @@ export const habits = pgTable(
   "habits",
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    userId: integer().references(() => users.id),
+    userId: integer()
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
     title: varchar({ length: 120 }).notNull(),
     description: text(),
     ...timestamps,
@@ -32,7 +34,9 @@ export const habitsCompletion = pgTable(
   "habits_completion",
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    habitId: integer().references(() => habits.id),
+    habitId: integer()
+      .references(() => habits.id, { onDelete: "cascade" })
+      .notNull(),
     completedAt: timestamp().defaultNow(),
   },
   (table) => [

@@ -77,4 +77,5 @@ export async function markAllCompleted(userId: number) {
 
 export async function deleteHabit(id: number) {
   await db.delete(habits).where(eq(habits.id, id));
+  revalidatePath("/habits/manage");
 }
