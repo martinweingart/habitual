@@ -3,9 +3,14 @@ export type Habit = {
   userId: number;
   title: string;
   description: string;
-  updated_at: Date | null;
+  updated_at?: Date | null;
   created_at: Date;
-  deleted_at: Date | null;
+  deleted_at?: Date | null;
+};
+
+export type HabitFormValue = {
+  title: string;
+  description: string;
 };
 
 export type UserDailyHabit = {

@@ -14,7 +14,8 @@ function NavBar() {
       </div>
 
       <div className="flex items-center gap-9">
-        <div className="flex items-center gap-4">
+        {/* TODO Add hamburguer icon button with links menu for mobile  */}
+        <div className="hidden md:flex items-center gap-4">
           <Link className="text-sm font-medium" href="/habits">
             Today
           </Link>

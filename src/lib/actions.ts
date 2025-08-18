@@ -3,15 +3,15 @@
 import { and, eq, sql } from "drizzle-orm";
 import { db } from "./db";
 import { habitsCompletion, habits } from "./db/schema";
-import { Habit, UserDailyHabit } from "@/types";
+import { HabitFormValue, UserDailyHabit } from "@/types";
 import { revalidatePath } from "next/cache";
 
 export async function getUserHabits(userId: number) {
-  const result = await db
+  return await db
     .select()
     .from(habits)
-    .where(eq(habits.userId, userId));
-  return result as Habit[];
+    .where(eq(habits.userId, userId))
+    .orderBy(habits.title);
 }
 
 export async function getTodayHabits(
@@ -32,7 +32,8 @@ export async function getTodayHabits(
         eq(sql`DATE(${habitsCompletion.completedAt})`, sql`CURRENT_DATE`)
       )
     )
-    .where(eq(habits.userId, userId));
+    .where(eq(habits.userId, userId))
+    .orderBy(habits.title);
 }
 
 export async function markCompleted(habitId: number) {
@@ -73,6 +74,22 @@ export async function markAllCompleted(userId: number) {
   );
 
   revalidatePath("/habits");
+}
+
+export async function addHabit(userId: number, value: HabitFormValue) {
+  const habit = await db
+    .insert(habits)
+    .values([{ userId, ...value }])
+    .returning();
+
+  revalidatePath("/habits/manage");
+
+  return habit;
+}
+
+export async function updateHabit(habitId: number, value: HabitFormValue) {
+  await db.update(habits).set(value).where(eq(habits.id, habitId));
+  revalidatePath("/habits/manage");
 }
 
 export async function deleteHabit(id: number) {

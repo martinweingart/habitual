@@ -3,11 +3,40 @@ import { PageDescription } from "@/components/PageDescription";
 import { getUserHabits } from "@/lib/actions";
 import { USER } from "@/session";
 import { Habit } from "@/types";
-import { HabitsTable } from "@/components/habits/HabitsTable";
+import { HabitsManage } from "@/components/habits/HabitsManage";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+async function HabitsFallback() {
+  const count = 10;
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="self-end">
+        <Skeleton className="h-[25px] w-[60px]" />
+      </div>
+
+      <div className="flex flex-col">
+        {Array.from({ length: count }).map((_, i) => (
+          <div
+            key={i}
+            className={`flex gap-10 py-2 ${i < count - 1 ? "border-b" : ""}`}
+          >
+            <Skeleton className="flex-1 h-[25px] w-[60px]" />
+            <Skeleton className="h-[25px] w-[60px]" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+async function HabitsContent() {
+  const habits: Habit[] = (await getUserHabits(USER.id)) as Habit[];
+  return <HabitsManage habits={habits} />;
+}
 
 export default async function Habits() {
-  const habits: Habit[] = await getUserHabits(USER.id);
-
   return (
     <div className="h-full grid grid-rows-[auto_minmax(0,1fr)] gap-8">
       <div className="flex justify-between pr-5">
@@ -17,7 +46,9 @@ export default async function Habits() {
         </div>
       </div>
 
-      <HabitsTable habits={habits} />
+      <Suspense fallback={<HabitsFallback />}>
+        <HabitsContent />
+      </Suspense>
     </div>
   );
 }
