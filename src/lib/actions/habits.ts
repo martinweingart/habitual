@@ -1,8 +1,8 @@
 "use server";
 
 import { and, eq, sql } from "drizzle-orm";
-import { db } from "./db";
-import { habitsCompletion, habits } from "./db/schema";
+import { db } from "@/lib/db";
+import { habitsCompletion, habits } from "@/lib/db/schema";
 import { HabitFormValue, UserDailyHabit } from "@/types";
 import { revalidatePath } from "next/cache";
 

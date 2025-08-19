@@ -11,6 +11,7 @@ import { timestamps } from "./columns/helpers";
 export const users = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
+  password: varchar({ length: 20 }).notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
   avatarUrl: text(),
   ...timestamps,

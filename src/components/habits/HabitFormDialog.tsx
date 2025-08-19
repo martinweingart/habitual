@@ -31,11 +31,11 @@ const habitFormSchema = z.object({
   title: z
     .string()
     .min(1, {
-      message: "A title is required",
+      error: "A title is required",
     })
     .max(120),
   description: z.string().min(1, {
-    message: "A description is required",
+    error: "A description is required",
   }),
 });
 

@@ -22,11 +22,11 @@ export default function Home() {
           </h3>
 
           <div className="flex-wrap gap-3 flex justify-center flex-col md:flex-row">
-            <Link href="/register">
-              <Button variant="primary">Sign Up</Button>
+            <Link href="/login">
+              <Button>Login</Button>
             </Link>
-            <Link href="/sign-in">
-              <Button variant="secondary">Sign In</Button>
+            <Link href="/register">
+              <Button variant="secondary">Register</Button>
             </Link>
           </div>
         </div>
