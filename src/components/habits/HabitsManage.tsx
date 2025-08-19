@@ -1,6 +1,7 @@
 "use client";
 
 import { startTransition, useOptimistic, useState } from "react";
+import { Edit, Trash } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -9,13 +10,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Habit, HabitFormValue } from "@/types";
-import { Edit, Trash } from "lucide-react";
-import { Button } from "../ui/button";
-import { HabitDeleteConfirmDialog } from "./HabitDeleteConfirmDialog";
 import { addHabit, deleteHabit, updateHabit } from "@/lib/actions";
-import { HabitFormDialog } from "./HabitFormDialog";
-import { USER } from "@/session";
+import { Habit, HabitFormValue } from "@/types";
+import { Button } from "@/components/ui/button";
+import { HabitDeleteConfirmDialog } from "@/components/habits/HabitDeleteConfirmDialog";
+import { HabitFormDialog } from "@/components/habits/HabitFormDialog";
 
 type OptimisticActionAdd = {
   type: "add";
@@ -51,6 +50,7 @@ function optimisticUpdate(prevHabits: Habit[], action: OptimisticAction) {
 }
 
 type HabitsManageProps = {
+  userId: number;
   habits: Habit[];
 };
 
@@ -113,7 +113,7 @@ export function HabitsManage(props: HabitsManageProps) {
           type: "add",
           habit: {
             id: new Date().getTime(),
-            userId: USER.id,
+            userId: props.userId,
             created_at: new Date(),
             ...value,
           },
@@ -124,7 +124,7 @@ export function HabitsManage(props: HabitsManageProps) {
     if (selected) {
       await updateHabit(selected.id, value);
     } else {
-      await addHabit(USER.id, value);
+      await addHabit(props.userId, value);
     }
   };
 

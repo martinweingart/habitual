@@ -1,6 +1,6 @@
 import { NavBar } from "@/components/navbar/NavBar";
 
-export default function HabitsLayout({
+export default async function HabitsLayout({
   children,
 }: {
   children: React.ReactNode;

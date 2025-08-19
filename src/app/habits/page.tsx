@@ -1,7 +1,6 @@
 import { Suspense } from "react";
-import { USER } from "@/session";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getTodayHabits } from "@/lib/actions";
+import { getTodayHabits, requireUser } from "@/lib/actions";
 import { HabitCheckForm } from "@/components/habits/HabitCheckForm";
 import { PageDescription } from "@/components/PageDescription";
 import { PageTitle } from "@/components/PageTitle";
@@ -21,9 +20,10 @@ function TodaysHabitFallback() {
 }
 
 async function TodaysHabitContent() {
-  const todayHabits = await getTodayHabits(USER.id);
+  const user = await requireUser();
+  const todayHabits = await getTodayHabits(user.id);
 
-  return <HabitCheckForm habits={todayHabits} />;
+  return <HabitCheckForm userId={user.id} habits={todayHabits} />;
 }
 
 export default async function Habits() {

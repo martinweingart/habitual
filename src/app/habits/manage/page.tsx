@@ -1,10 +1,9 @@
+import { Suspense } from "react";
 import { PageTitle } from "@/components/PageTitle";
 import { PageDescription } from "@/components/PageDescription";
-import { getUserHabits } from "@/lib/actions";
-import { USER } from "@/session";
+import { getUserHabits, requireUser } from "@/lib/actions";
 import { Habit } from "@/types";
 import { HabitsManage } from "@/components/habits/HabitsManage";
-import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 async function HabitsFallback() {
@@ -32,8 +31,10 @@ async function HabitsFallback() {
 }
 
 async function HabitsContent() {
-  const habits: Habit[] = (await getUserHabits(USER.id)) as Habit[];
-  return <HabitsManage habits={habits} />;
+  const user = await requireUser();
+
+  const habits: Habit[] = (await getUserHabits(user.id)) as Habit[];
+  return <HabitsManage userId={user.id} habits={habits} />;
 }
 
 export default async function Habits() {

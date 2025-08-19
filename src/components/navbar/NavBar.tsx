@@ -1,9 +1,8 @@
-import { Logo } from "../Logo";
-import { UserAvatar } from "../UserAvatar";
-import { USER } from "@/session";
-import { NavBarLinks } from "./NavBarLinks";
+import { Logo } from "@/components/Logo";
+import { NavBarLinks } from "@/components/navbar/NavBarLinks";
+import { LogoutButton } from "@/components/auth/LogoutButton";
 
-function NavBar() {
+async function NavBar() {
   return (
     <header className="flex items-center justify-between border-b border-solid px-2 md:px-10 py-3">
       <div className="flex items-center gap-4">
@@ -15,7 +14,8 @@ function NavBar() {
 
       <div className="flex items-center gap-4 md:gap-8">
         <NavBarLinks />
-        <UserAvatar src={USER.avatar_url} name={USER.name} />
+
+        <LogoutButton />
       </div>
     </header>
   );

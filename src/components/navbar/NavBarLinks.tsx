@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NavBarMenu } from "./NavBarMenu";
+import { NavBarMenu } from "@/components/navbar/NavBarMenu";
 
 export function NavBarLinks() {
   return (

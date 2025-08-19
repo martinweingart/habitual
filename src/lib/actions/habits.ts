@@ -1,10 +1,10 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { and, eq, sql } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { habitsCompletion, habits } from "@/lib/db/schema";
 import { HabitFormValue, UserDailyHabit } from "@/types";
-import { revalidatePath } from "next/cache";
 
 export async function getUserHabits(userId: number) {
   return await db

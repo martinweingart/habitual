@@ -1,7 +1,9 @@
 "use client";
-
+import { useState } from "react";
 import z from "zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Loader2Icon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -10,9 +12,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { login } from "@/lib/actions";
 
 const formSchema = z.object({
@@ -23,6 +25,8 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,7 +36,13 @@ export function LoginForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await login(values);
+    setLoading(true);
+    const result = await login(values);
+    setLoading(false);
+
+    if (result.message) {
+      toast.error(result.message);
+    }
   };
 
   return (
@@ -44,6 +54,7 @@ export function LoginForm() {
         <FormField
           control={form.control}
           name="email"
+          disabled={loading}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
@@ -59,6 +70,7 @@ export function LoginForm() {
         <FormField
           control={form.control}
           name="password"
+          disabled={loading}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
@@ -74,8 +86,9 @@ export function LoginForm() {
           )}
         />
 
-        <Button className="self-end" type="submit">
-          Login
+        <Button className="self-end" type="submit" disabled={loading}>
+          {loading && <Loader2Icon className="animate-spin" />}
+          {loading ? "Logging in..." : "Login"}
         </Button>
       </form>
     </Form>

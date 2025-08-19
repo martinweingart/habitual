@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import z from "zod";
 import { useForm } from "react-hook-form";
+import { Loader2Icon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -10,10 +12,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { register } from "@/lib/actions";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z
@@ -39,6 +42,8 @@ const formSchema = z.object({
 });
 
 export function RegisterForm() {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,7 +54,13 @@ export function RegisterForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await register(values);
+    setLoading(true);
+    const result = await register(values);
+    setLoading(false);
+
+    if (result.message) {
+      toast.error(result.message);
+    }
   };
 
   return (
@@ -61,6 +72,7 @@ export function RegisterForm() {
         <FormField
           control={form.control}
           name="name"
+          disabled={loading}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Full Name</FormLabel>
@@ -76,6 +88,7 @@ export function RegisterForm() {
         <FormField
           control={form.control}
           name="email"
+          disabled={loading}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
@@ -91,6 +104,7 @@ export function RegisterForm() {
         <FormField
           control={form.control}
           name="password"
+          disabled={loading}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
@@ -106,8 +120,9 @@ export function RegisterForm() {
           )}
         />
 
-        <Button className="self-end" type="submit">
-          Register
+        <Button className="self-end" type="submit" disabled={loading}>
+          {loading && <Loader2Icon className="animate-spin" />}
+          {loading ? "Creating account..." : "Register"}
         </Button>
       </form>
     </Form>

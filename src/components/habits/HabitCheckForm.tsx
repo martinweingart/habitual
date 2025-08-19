@@ -3,7 +3,7 @@
 import { startTransition, useOptimistic } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import {} from "@/components/ui/form";
-import { Label } from "../ui/label";
+import { Label } from "@/components/ui/label";
 import { UserDailyHabit } from "@/types";
 import { cn } from "@/lib/utils";
 import {
@@ -11,8 +11,7 @@ import {
   markCompleted,
   markUncompleted,
 } from "@/lib/actions";
-import { Button } from "../ui/button";
-import { USER } from "@/session";
+import { Button } from "@/components/ui/button";
 
 type OptimisticActionAll = {
   type: "all";
@@ -43,6 +42,7 @@ function optimisticUpdate(
 }
 
 type HabitCheckFormProps = {
+  userId: number;
   habits: UserDailyHabit[];
 };
 
@@ -69,7 +69,7 @@ export function HabitCheckForm(props: HabitCheckFormProps) {
       setOptimisticHabits({ type: "all" });
     });
 
-    await markAllCompleted(USER.id);
+    await markAllCompleted(props.userId);
   };
 
   return (

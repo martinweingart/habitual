@@ -1,3 +1,12 @@
+export type SessionData = {
+  id: number;
+  name: string;
+};
+
+export type SessionPayload = SessionData & {
+  expiresAt: Date;
+};
+
 export type Habit = {
   id: number;
   userId: number;
