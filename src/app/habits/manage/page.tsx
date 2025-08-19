@@ -1,10 +1,9 @@
 import { Suspense } from "react";
-import { PageTitle } from "@/components/PageTitle";
-import { PageDescription } from "@/components/PageDescription";
 import { getUserHabits, requireUser } from "@/lib/actions";
 import { Habit } from "@/types";
 import { HabitsManage } from "@/components/habits/HabitsManage";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageHeader } from "@/components/PageHeader";
 
 async function HabitsFallback() {
   const count = 10;
@@ -40,12 +39,10 @@ async function HabitsContent() {
 export default async function Habits() {
   return (
     <div className="h-full grid grid-rows-[auto_minmax(0,1fr)] gap-8">
-      <div className="flex justify-between pr-5">
-        <div>
-          <PageTitle>{"Manage Habits"}</PageTitle>
-          <PageDescription>Add, edit, or delete your habits</PageDescription>
-        </div>
-      </div>
+      <PageHeader
+        title="Manage Habits"
+        description="Add, edit, or delete your habits"
+      />
 
       <Suspense fallback={<HabitsFallback />}>
         <HabitsContent />

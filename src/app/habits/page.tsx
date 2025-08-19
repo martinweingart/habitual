@@ -2,8 +2,7 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTodayHabits, requireUser } from "@/lib/actions";
 import { HabitCheckForm } from "@/components/habits/HabitCheckForm";
-import { PageDescription } from "@/components/PageDescription";
-import { PageTitle } from "@/components/PageTitle";
+import { PageHeader } from "@/components/PageHeader";
 
 function TodaysHabitFallback() {
   const count = 12;
@@ -29,10 +28,10 @@ async function TodaysHabitContent() {
 export default async function Habits() {
   return (
     <div className="flex flex-col gap-8">
-      <div>
-        <PageTitle>{"Today's Habits"}</PageTitle>
-        <PageDescription>Mark completed habits for today!</PageDescription>
-      </div>
+      <PageHeader
+        title="Today's Habits"
+        description="Mark completed habits for today!"
+      />
 
       <Suspense fallback={<TodaysHabitFallback />}>
         <TodaysHabitContent />
