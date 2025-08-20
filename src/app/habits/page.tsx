@@ -1,0 +1,50 @@
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getTodayHabits, requireUser } from "@/lib/actions";
+import { HabitCheckForm } from "@/components/habits/HabitCheckForm";
+import { PageHeader } from "@/components/PageHeader";
+import { HabitsEmptyMessage } from "@/components/habits/HabitsEmptyMessage";
+import { UserDailyHabit } from "@/types";
+
+function TodaysHabitFallback() {
+  const count = 12;
+  return (
+    <div className="lg:columns-2 xl:columns-3 space-y-4">
+      {Array.from({ length: count }).map((_, i) => (
+        <div key={i} className="flex items-start gap-3">
+          <Skeleton className="h-4 w-[20px]" />
+          <Skeleton className="flex-1 h-4" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+async function TodaysHabitContent() {
+  const user = await requireUser();
+  const todayHabits: UserDailyHabit[] = await getTodayHabits(user.id);
+
+  return (
+    <>
+      {todayHabits.length === 0 && <HabitsEmptyMessage />}
+      {todayHabits.length > 0 && (
+        <HabitCheckForm userId={user.id} habits={todayHabits} />
+      )}
+    </>
+  );
+}
+
+export default async function Habits() {
+  return (
+    <div className="flex flex-col gap-8">
+      <PageHeader
+        title="Today's Habits"
+        description="Mark completed habits for today!"
+      />
+
+      <Suspense fallback={<TodaysHabitFallback />}>
+        <TodaysHabitContent />
+      </Suspense>
+    </div>
+  );
+}
