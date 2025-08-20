@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Habitual
+
+A modern habit tracker web application built with [Next.js](https://nextjs.org), Drizzle ORM, PostgreSQL, and shadcn/ui.
+
+## Features
+
+- User authentication and registration
+- Create, edit, and delete habits
+- Daily habit completion tracking
+- Habit streaks and weekly progress charts
+- Responsive, accessible UI with Tailwind CSS and shadcn/ui
+- Optimistic UI updates for a smooth experience
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Set up your environment:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   - Copy `.env.example` to `.env.development.local` and fill in your database and secret values.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Run database migrations:**
 
-## Learn More
+   ```bash
+   npm run db:migrate
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Start the development server:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   npm run dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `src/app/` — Next.js app directory (routes, pages, layouts)
+- `src/components/` — UI and feature components
+- `src/lib/` — Database, actions, and utility functions
+- `src/types/` — TypeScript types
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tech Stack
+
+- Next.js (App Router)
+- Drizzle ORM
+- PostgreSQL
+- Tailwind CSS & shadcn/ui
+- TypeScript
+
+## Deployment
+
+Deploy easily on [Vercel](https://vercel.com/) or your preferred platform.  
+See [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying).
+
+## License
+
+MIT
