@@ -38,7 +38,7 @@ async function HabitsContent() {
 
 export default async function Habits() {
   return (
-    <div className="h-full grid grid-rows-[auto_minmax(0,1fr)] gap-8">
+    <div className="flex flex-col gap-8">
       <PageHeader
         title="Manage Habits"
         description="Add, edit, or delete your habits"

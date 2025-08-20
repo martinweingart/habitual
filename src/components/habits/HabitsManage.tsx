@@ -144,45 +144,63 @@ export function HabitsManage(props: HabitsManageProps) {
       />
 
       <div className="flex flex-col gap-4">
-        <Button
-          className="self-end mr-4"
-          onClick={() => setFormDialogOpen(true)}
-        >
-          Add
-        </Button>
+        {optimisticHabits.length === 0 && (
+          <div className="flex flex-col gap-4 text-gray-600">
+            <p>{"You haven't added any habits to track yet."}</p>
 
-        <Table>
-          <TableHeader className="sticky top-0 bg-white z-10">
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead className="w-24 text-right pr-4">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {optimisticHabits.map((habit) => (
-              <TableRow key={habit.id}>
-                <TableCell>{habit.title}</TableCell>
-                <TableCell className="w-24 text-right pr-4">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => onEdit(habit)}
-                  >
-                    <Edit />
-                  </Button>
+            <Button
+              className="self-start"
+              onClick={() => setFormDialogOpen(true)}
+            >
+              Start by adding your first habit
+            </Button>
+          </div>
+        )}
 
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => onDeleteHabit(habit)}
-                  >
-                    <Trash />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        {optimisticHabits.length > 0 && (
+          <>
+            <Button
+              className="self-end mr-4"
+              onClick={() => setFormDialogOpen(true)}
+            >
+              Add
+            </Button>
+            <Table>
+              <TableHeader className="sticky top-0 bg-white z-10">
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead className="w-24 text-right pr-4">
+                    Actions
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {optimisticHabits.map((habit) => (
+                  <TableRow key={habit.id}>
+                    <TableCell>{habit.title}</TableCell>
+                    <TableCell className="w-24 text-right pr-4">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onEdit(habit)}
+                      >
+                        <Edit />
+                      </Button>
+
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onDeleteHabit(habit)}
+                      >
+                        <Trash />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </>
+        )}
       </div>
     </>
   );

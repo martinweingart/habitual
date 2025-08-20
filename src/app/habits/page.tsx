@@ -3,6 +3,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getTodayHabits, requireUser } from "@/lib/actions";
 import { HabitCheckForm } from "@/components/habits/HabitCheckForm";
 import { PageHeader } from "@/components/PageHeader";
+import { HabitsEmptyMessage } from "@/components/habits/HabitsEmptyMessage";
+import { UserDailyHabit } from "@/types";
 
 function TodaysHabitFallback() {
   const count = 12;
@@ -20,9 +22,16 @@ function TodaysHabitFallback() {
 
 async function TodaysHabitContent() {
   const user = await requireUser();
-  const todayHabits = await getTodayHabits(user.id);
+  const todayHabits: UserDailyHabit[] = await getTodayHabits(user.id);
 
-  return <HabitCheckForm userId={user.id} habits={todayHabits} />;
+  return (
+    <>
+      {todayHabits.length === 0 && <HabitsEmptyMessage />}
+      {todayHabits.length > 0 && (
+        <HabitCheckForm userId={user.id} habits={todayHabits} />
+      )}
+    </>
+  );
 }
 
 export default async function Habits() {
