@@ -27,3 +27,16 @@ export type UserDailyHabit = {
   title: string;
   completed_at?: Date | null;
 };
+
+export type UserHabitStreak = {
+  habit_id: number;
+  title: string;
+  current_streak: number;
+};
+
+export type WeekHabitsCountItem = {
+  date: string;
+  completed_count: number;
+};
+
+export type WeekHabitsCount = WeekHabitsCountItem[];
